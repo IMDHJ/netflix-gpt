@@ -15,6 +15,11 @@
 - Setup redux store with user slice
 - Implemented Sign Out
 - Updated profile
+- BugFix: Signup user and display profile pic
+- Bug fix: protect the routes
+- Unsubscribe from onAuthStateChanged callback
+- Register TMDB API and create app
+- Make API call to TMDB API
 ...
 
 # features 

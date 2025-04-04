@@ -6,6 +6,7 @@ import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { NETFLIX_BACKGROUND, USER_IMG } from '../utils/constats';
 
 const Login = () => {
     const[isSignUpForm, setIsSignUpForm] = useState(false);
@@ -14,7 +15,6 @@ const Login = () => {
     const name = useRef(null);
     const email = useRef(null);
     const password = useRef(null)
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const toggleSignUpForm = () =>{
@@ -33,13 +33,11 @@ const Login = () => {
         .then((userCredential) => {         
           const user = userCredential.user;
           updateProfile(user, {
-            displayName: name.current.value, photoURL: "https://avatars.githubusercontent.com/u/33377912?v=4"
+            displayName: name.current.value, photoURL: USER_IMG
           })
             .then(() => {
-              console.log(user)
               const {uid, email, displayName,photoURL} = auth.currentUser;
               dispatch(addUser({uid: uid, email: email, displayName: displayName,photoURL: photoURL}));
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error.code + "-" + errorMessage);
@@ -57,8 +55,6 @@ const Login = () => {
           signInWithEmailAndPassword(auth, email.current.value, password.current.value)
           .then((userCredential) => {
             const user = userCredential.user;
-            console.log("Signed-in user", user);
-            navigate("/browse");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -72,8 +68,8 @@ const Login = () => {
     <div>
       <Header/>
       <div className='absolute'>
-        <img src='https://assets.nflxext.com/ffe/siteui/vlv3/f6e7f6df-6973-46ef-b98f-12560d2b3c69/web/IN-en-20250317-TRIFECTA-perspective_26f87873-6014-460d-a6fb-1d96d85ffe5f_large.jpg'
-            alt='logo'
+        <img src={NETFLIX_BACKGROUND}
+            alt='backgroundImage'
         />
       </div>
       <form onSubmit={(e) => e.preventDefault()} className='w-4/12 absolute p-12 bg-black my-48 mx-auto right-0 left-0 text-white bg-opacity-80'>   
